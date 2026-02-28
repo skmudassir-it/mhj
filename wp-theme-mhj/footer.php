@@ -34,6 +34,7 @@ else {
                     <li><a href="<?php echo esc_url(home_url('/')); ?>" class="hover:text-brand-primary transition-colors">Home</a></li>
                     <li><a href="<?php echo esc_url(home_url('/about')); ?>" class="hover:text-brand-primary transition-colors">About Us</a></li>
                     <li><a href="<?php echo esc_url(home_url('/events')); ?>" class="hover:text-brand-primary transition-colors">Events</a></li>
+                    <li><a href="<?php echo esc_url(home_url('/get-involved')); ?>" class="hover:text-brand-primary transition-colors">Get Involved</a></li>
                     <li><a href="<?php echo esc_url(home_url('/gallery')); ?>" class="hover:text-brand-primary transition-colors">Gallery</a></li>
                 </ul>
                 <?php

@@ -60,7 +60,8 @@ function mhj_auto_create_pages()
 		'About Us' => 'page-about.php',
 		'Events' => 'page-events.php',
 		'Gallery' => 'page-gallery.php',
-		'Contact Us' => 'page-contact.php'
+		'Contact Us' => 'page-contact.php',
+		'Get Involved' => 'page-get-involved.php'
 	);
 
 	foreach ($pages as $page_title => $page_template) {

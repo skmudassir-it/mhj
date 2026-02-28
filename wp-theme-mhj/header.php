@@ -39,7 +39,16 @@ wp_nav_menu(array(
     'theme_location' => 'primary',
     'container' => false,
     'menu_class' => 'flex items-center space-x-8 text-sm font-semibold',
-    'fallback_cb' => false,
+    'fallback_cb' => function () {
+        echo '<ul class="flex items-center space-x-8 text-sm font-semibold">';
+        echo '<li><a href="' . esc_url(home_url('/')) . '" class="font-bold text-slate-500 hover:text-brand-primary transition-colors uppercase tracking-widest text-sm">Home</a></li>';
+        echo '<li><a href="' . esc_url(home_url('/about')) . '" class="font-bold text-slate-500 hover:text-brand-primary transition-colors uppercase tracking-widest text-sm">About Us</a></li>';
+        echo '<li><a href="' . esc_url(home_url('/events')) . '" class="font-bold text-slate-500 hover:text-brand-primary transition-colors uppercase tracking-widest text-sm">Events</a></li>';
+        echo '<li><a href="' . esc_url(home_url('/get-involved')) . '" class="font-bold text-slate-500 hover:text-brand-primary transition-colors uppercase tracking-widest text-sm">Get Involved</a></li>';
+        echo '<li><a href="' . esc_url(home_url('/gallery')) . '" class="font-bold text-slate-500 hover:text-brand-primary transition-colors uppercase tracking-widest text-sm">Gallery</a></li>';
+        echo '<li><a href="' . esc_url(home_url('/contact')) . '" class="font-bold text-slate-500 hover:text-brand-primary transition-colors uppercase tracking-widest text-sm">Contact</a></li>';
+        echo '</ul>';
+    },
     'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
 ));
 ?>
