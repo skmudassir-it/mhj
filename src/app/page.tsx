@@ -1,7 +1,23 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
+  const [settings, setSettings] = useState({
+    hero_title: 'JAMBOREE',
+    hero_tagline: 'Celebrating the magic of community wellness'
+  });
+
+  useEffect(() => {
+    async function fetchSettings() {
+      const { data } = await supabase.from('site_settings').select('*').single();
+      if (data) setSettings(data);
+    }
+    fetchSettings();
+  }, []);
   return (
     <div className="flex flex-col font-sans">
 
@@ -21,10 +37,10 @@ export default function Home() {
 
           <div className="relative z-10 mx-auto max-w-7xl px-6 text-center space-y-8">
             <h1 className="text-7xl md:text-[10rem] font-black leading-none tracking-tighter text-white uppercase animate-in fade-in zoom-in duration-1000">
-              JAMBOREE
+              {settings.hero_title}
             </h1>
             <p className="mx-auto max-w-2xl text-xl md:text-3xl font-black text-white uppercase tracking-[0.2em] opacity-90 animate-in fade-in slide-in-from-bottom duration-1000 delay-300">
-              Celebrating the magic of community wellness
+              {settings.hero_tagline}
             </p>
             <div className="pt-8 animate-in fade-in slide-in-from-bottom duration-1000 delay-500">
               <Link href="#get-involved" className="inline-block bg-brand-primary text-white px-12 py-6 rounded-2xl text-xl font-black uppercase tracking-widest shadow-2xl hover:bg-brand-secondary transition-all hover:-translate-y-1">

@@ -1,16 +1,21 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
 import Image from 'next/image';
 
 export default function GalleryPage() {
-    const images = [
-        { src: "/hero_memphis_health.png", title: "Tom Lee Park Fitness", size: "col-span-2 row-span-2" },
-        { src: "/gourmet_nutrition.png", title: "Fresh Produce Workshop", size: "col-span-1 row-span-1" },
-        { src: "/wellness_workshop.png", title: "Community Meditation", size: "col-span-1 row-span-1" },
-        { src: "/team/team1.jpg", title: "Core Leadership", size: "col-span-1 row-span-2" },
-        { src: "/team/team2.jpg", title: "Outreach in Action", size: "col-span-2 row-span-1" },
-        { src: "/team/team3.jpg", title: "Logistics Excellence", size: "col-span-1 row-span-1" },
-    ];
+    const [images, setImages] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchImages() {
+            const { data } = await supabase.from('gallery').select('*').order('created_at', { ascending: false });
+            if (data) setImages(data);
+            setLoading(false);
+        }
+        fetchImages();
+    }, []);
 
     return (
         <div className="bg-white dark:bg-slate-950 font-sans selection:bg-brand-primary selection:text-white">

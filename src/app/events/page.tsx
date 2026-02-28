@@ -1,42 +1,21 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
 import Image from 'next/image';
 
 export default function EventsPage() {
-    const events = [
-        {
-            date: "March 15, 2026",
-            title: "Crumbs & Culture: Soulsville Activation",
-            location: "Stax Museum Grounds",
-            time: "10:00 AM - 2:00 PM",
-            description: "A day of community storytelling, local food tastings, and family movement workshops in the heart of Soulsville.",
-            category: "Tour"
-        },
-        {
-            date: "April 12, 2026",
-            title: "Mental Wellness Garden Workshop",
-            location: "Cooper-Young Community Garden",
-            time: "4:00 PM - 6:00 PM",
-            description: "Learn mindfulness techniques while engaging in therapeutic community gardening.",
-            category: "Workshop"
-        },
-        {
-            date: "May 20, 2026",
-            title: "OKRA Health Network: Launch Summit",
-            location: "UofM School of Public Health",
-            time: "9:00 AM - 3:00 PM",
-            description: "Connecting community health workers and residents to build the future of relational health in Memphis.",
-            category: "Summit"
-        },
-        {
-            date: "June 05, 2026",
-            title: "Juneteenth Jubilee Prep",
-            location: "Tom Lee Park",
-            time: "11:00 AM - 4:00 PM",
-            description: "Fitness and nutrition preview for the 2027 main Jamboree event.",
-            category: "Celebration"
+    const [events, setEvents] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchEvents() {
+            const { data } = await supabase.from('events').select('*').order('created_at', { ascending: false });
+            if (data) setEvents(data);
+            setLoading(false);
         }
-    ];
+        fetchEvents();
+    }, []);
 
     return (
         <div className="bg-white dark:bg-slate-950 font-sans selection:bg-brand-primary selection:text-white">
