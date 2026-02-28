@@ -126,20 +126,20 @@ export default function Home() {
                 </p>
                 <div className="grid grid-cols-2 gap-8">
                   <div>
-                    <div className="text-4xl font-black text-brand-primary">15k+</div>
-                    <div className="text-slate-500 font-bold">Community Members Served</div>
+                    <div className="text-4xl font-black text-brand-primary">400+</div>
+                    <div className="text-slate-500 font-bold">Planned Participants</div>
                   </div>
                   <div>
-                    <div className="text-4xl font-black text-brand-primary">200+</div>
-                    <div className="text-slate-500 font-bold">Free Workshops Held</div>
+                    <div className="text-4xl font-black text-brand-primary">15</div>
+                    <div className="text-slate-500 font-bold">Changemaker Nations</div>
                   </div>
                   <div>
-                    <div className="text-4xl font-black text-brand-primary">5k+</div>
-                    <div className="text-slate-500 font-bold">Lbs of Fresh Food Distributed</div>
+                    <div className="text-4xl font-black text-brand-primary">2027</div>
+                    <div className="text-slate-500 font-bold">Jamboree April</div>
                   </div>
                   <div>
-                    <div className="text-4xl font-black text-brand-primary">50+</div>
-                    <div className="text-slate-500 font-bold">Local Partners</div>
+                    <div className="text-4xl font-black text-brand-primary">2026</div>
+                    <div className="text-slate-500 font-bold">Activation Year</div>
                   </div>
                 </div>
               </div>
