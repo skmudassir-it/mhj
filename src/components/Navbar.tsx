@@ -38,7 +38,7 @@ export default function Navbar() {
                             {link.name}
                         </Link>
                     ))}
-                    <Link href="/#get-involved" className="glass bg-brand-primary !bg-opacity-100 px-6 py-2.5 !text-white rounded-full text-sm font-bold shadow-lg shadow-brand-primary/30 hover:scale-105 active:scale-95 transition-all">Support Our Mission</Link>
+                    <Link href="/#get-involved" className="bg-brand-accent px-6 py-2.5 text-white rounded-full text-sm font-bold shadow-lg shadow-brand-accent/30 hover:scale-105 active:scale-95 transition-all">Support Our Mission</Link>
                 </div>
             </div>
         </nav>

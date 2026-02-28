@@ -17,14 +17,22 @@ export default function Footer() {
                         </div>
                         <p className="text-lg text-slate-500 max-w-md font-medium leading-relaxed">Dedicated to building a healthier, stronger, and more vibrant Memphis through the power of community, health equity, and ancestral wisdom.</p>
                         <div className="flex gap-4">
-                            {['TW', 'IG', 'LI', 'FB'].map(s => <div key={s} className="w-12 h-12 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center font-bold text-sm cursor-pointer hover:border-brand-primary hover:text-brand-primary transition-all">{s}</div>)}
+                            {[
+                                { name: 'IG', url: 'https://www.instagram.com/Memphishealthjamboree' },
+                                { name: 'YT', url: 'https://www.youtube.com/@MemphisHealthJamboree' },
+                                { name: 'FB', url: 'https://www.facebook.com/MemphisHealthJamboree' }
+                            ].map(s => (
+                                <a key={s.name} href={s.url} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center font-bold text-sm cursor-pointer hover:border-brand-primary hover:text-brand-primary transition-all">
+                                    {s.name}
+                                </a>
+                            ))}
                         </div>
                     </div>
                     <div className="space-y-6">
                         <h5 className="font-bold text-lg uppercase tracking-widest">Navigation</h5>
                         <ul className="space-y-4 text-slate-500 font-medium">
                             <li><Link href="/" className="hover:text-brand-primary transition-colors">Home</Link></li>
-                            <li><Link href="/about" className="hover:text-brand-primary transition-colors">Our Story</Link></li>
+                            <li><Link href="/about" className="hover:text-brand-primary transition-colors">About Us</Link></li>
                             <li><Link href="/events" className="hover:text-brand-primary transition-colors">Events</Link></li>
                             <li><Link href="/gallery" className="hover:text-brand-primary transition-colors">Gallery</Link></li>
                         </ul>
