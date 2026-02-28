@@ -1,6 +1,8 @@
 import { SignJWT, jwtVerify } from 'jose';
+import { createHmac } from 'crypto';
 
-const secret = new TextEncoder().encode(process.env.JWT_SECRET || '750aa9bd');
+const secretStr = process.env.JWT_SECRET || '750aa9bd';
+const secret = new TextEncoder().encode(secretStr);
 
 export async function signToken(payload: any) {
     return await new SignJWT(payload)
@@ -17,4 +19,10 @@ export async function verifyToken(token: string) {
     } catch (error) {
         return null;
     }
+}
+
+export function encryptPin(pin: string) {
+    return createHmac('sha256', secretStr)
+        .update(pin)
+        .digest('hex');
 }

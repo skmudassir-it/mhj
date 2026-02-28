@@ -1,13 +1,26 @@
 import { NextResponse } from 'next/server';
-import { signToken } from '@/lib/auth';
-import { cookies } from 'next/headers';
+import { signToken, encryptPin } from '@/lib/auth';
+import { supabase } from '@/lib/supabase';
 
 export async function POST(request: Request) {
     try {
         const body = await request.json();
         const { pin } = body;
 
-        if (pin === (process.env.ADMIN_PIN || '123456')) {
+        // Fetch encrypted PIN from database
+        const { data, error: dbError } = await supabase
+            .from('admin_auth')
+            .select('encrypted_pin')
+            .single();
+
+        if (dbError || !data) {
+            console.error("Database auth fetch error:", dbError);
+            return NextResponse.json({ error: 'Authentication system unavailable' }, { status: 500 });
+        }
+
+        const inputEncrypted = encryptPin(pin);
+
+        if (inputEncrypted === data.encrypted_pin) {
             const token = await signToken({ authenticated: true });
 
             const response = NextResponse.json({ success: true });
