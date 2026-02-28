@@ -271,6 +271,17 @@ export default function AdminPage() {
                             <span>{tab.label}</span>
                         </button>
                     ))}
+
+                    <button
+                        onClick={async () => {
+                            await fetch('/api/admin/logout', { method: 'POST' });
+                            window.location.href = '/admin/login';
+                        }}
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-rose-500 hover:bg-rose-50 transition-all mt-auto"
+                    >
+                        <span>🚪</span>
+                        <span>Logout</span>
+                    </button>
                 </nav>
             </aside>
 
