@@ -32,19 +32,7 @@ export default function AboutPage() {
     ];
 
     return (
-        <div className="min-h-screen bg-white dark:bg-slate-950 font-sans selection:bg-brand-primary selection:text-white">
-            {/* Simple Nav for Subpages */}
-            <nav className="glass sticky top-0 z-50 w-full px-6 py-4">
-                <div className="mx-auto flex max-w-7xl items-center justify-between">
-                    <Link href="/" className="flex items-center gap-4 group cursor-pointer">
-                        <div className="relative w-12 h-12">
-                            <Image src="/logo.png" alt="MHJ Logo" fill className="object-contain group-hover:scale-110 transition-transform" />
-                        </div>
-                        <span className="text-xl font-black tracking-tight text-brand-primary leading-none uppercase">Memphis Health<br />Jamboree</span>
-                    </Link>
-                    <Link href="/" className="text-sm font-black uppercase tracking-widest text-slate-500 hover:text-brand-primary transition-colors">Back to Home</Link>
-                </div>
-            </nav>
+        <div className="bg-white dark:bg-slate-950 font-sans selection:bg-brand-primary selection:text-white">
 
             <main>
                 {/* Header Section */}
@@ -123,19 +111,6 @@ export default function AboutPage() {
                     </div>
                 </section>
             </main>
-
-            {/* Footer (Simplified) */}
-            <footer className="py-12 px-6 border-t border-slate-100 dark:border-slate-800">
-                <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-8">
-                    <div className="flex items-center gap-4">
-                        <div className="relative w-10 h-10">
-                            <Image src="/logo.png" alt="MHJ Logo" fill className="object-contain" />
-                        </div>
-                        <span className="text-lg font-black tracking-tight text-brand-primary leading-none uppercase">Memphis Health<br />Jamboree</span>
-                    </div>
-                    <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">© 2026 A 501(c)(3) Organization</p>
-                </div>
-            </footer>
         </div>
     );
 }

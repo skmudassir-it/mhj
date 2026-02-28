@@ -3,27 +3,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col font-sans">
-      {/* Navigation */}
-      <nav className="glass sticky top-0 z-50 w-full px-6 py-4">
-        <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <div className="flex items-center gap-4 group cursor-pointer">
-            <div className="relative w-12 h-12">
-              <Image src="/logo.png" alt="MHJ Logo" fill className="object-contain group-hover:scale-110 transition-transform" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-black tracking-tight text-brand-primary leading-none uppercase">Memphis Health<br />Jamboree</span>
-            </div>
-          </div>
-          <div className="hidden space-x-8 md:flex items-center">
-            <a href="#mission" className="text-sm font-semibold hover:text-brand-primary transition-colors">Our Mission</a>
-            <a href="#impact" className="text-sm font-semibold hover:text-brand-primary transition-colors">Impact</a>
-            <Link href="/about" className="text-sm font-semibold hover:text-brand-primary transition-colors">About Us</Link>
-            <a href="#programs" className="text-sm font-semibold hover:text-brand-primary transition-colors">Programs</a>
-            <a href="#get-involved" className="glass bg-brand-primary !bg-opacity-100 px-6 py-2.5 !text-white rounded-full text-sm font-bold shadow-lg shadow-brand-primary/30 hover:scale-105 active:scale-95 transition-all">Support Our Mission</a>
-          </div>
-        </div>
-      </nav>
+    <div className="flex flex-col font-sans">
 
       <main className="flex-grow">
         {/* Hero Section */}
@@ -375,47 +355,6 @@ export default function Home() {
           </div>
         </section>
       </main>
-
-      <footer className="bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-900 py-20 px-6">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
-            <div className="col-span-1 md:col-span-2 space-y-8">
-              <div className="flex items-center gap-4">
-                <div className="relative w-12 h-12">
-                  <Image src="/logo.png" alt="MHJ Logo" fill className="object-contain" />
-                </div>
-                <span className="text-2xl font-black tracking-tight text-brand-primary leading-none uppercase">Memphis Health <br />Jamboree</span>
-              </div>
-              <p className="text-lg text-slate-500 max-w-md font-medium leading-relaxed">Dedicated to building a healthier, stronger, and more vibrant Memphis through the power of community, health equity, and ancestral wisdom.</p>
-              <div className="flex gap-4">
-                {['TW', 'IG', 'LI', 'FB'].map(s => <div key={s} className="w-12 h-12 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center font-bold text-sm cursor-pointer hover:border-brand-primary hover:text-brand-primary transition-all">{s}</div>)}
-              </div>
-            </div>
-            <div className="space-y-6">
-              <h5 className="font-bold text-lg uppercase tracking-widest">About Us</h5>
-              <ul className="space-y-4 text-slate-500 font-medium">
-                <li><Link href="/about" className="hover:text-brand-primary transition-colors">Our Story</Link></li>
-                <li><Link href="/about" className="hover:text-brand-primary transition-colors">Meet the Team</Link></li>
-                <li><a href="#mission" className="hover:text-brand-primary transition-colors">Our Mission</a></li>
-                <li><a href="#impact" className="hover:text-brand-primary transition-colors">Impact Reports</a></li>
-                <li><a href="#programs" className="hover:text-brand-primary transition-colors">Programs</a></li>
-              </ul>
-            </div>
-            <div className="space-y-6">
-              <h5 className="font-bold text-lg uppercase tracking-widest">Get Involved</h5>
-              <ul className="space-y-4 text-slate-500 font-medium">
-                <li><a href="#get-involved" className="hover:text-brand-primary transition-colors">Donate</a></li>
-                <li><a href="#get-involved" className="hover:text-brand-primary transition-colors">Volunteer</a></li>
-                <li><a href="#" className="hover:text-brand-primary transition-colors">Partnerships</a></li>
-                <li><a href="#" className="hover:text-brand-primary transition-colors">Contact Us</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="text-center pt-12 border-t border-slate-200 dark:border-slate-900 text-sm font-bold text-slate-400 uppercase tracking-widest">
-            © 2026 Memphis Health Jamboree. A Registered 501(c)(3) Non-Profit Organization.
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
