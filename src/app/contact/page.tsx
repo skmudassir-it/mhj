@@ -1,6 +1,37 @@
 'use client';
 
+import { useState } from 'react';
+import { supabase } from '@/lib/supabase';
+
 export default function ContactPage() {
+    const [loading, setLoading] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    const [formData, setFormData] = useState({
+        full_name: '',
+        email: '',
+        subject: 'General Inquiry',
+        message: ''
+    });
+
+    async function handleSubmit(e: React.FormEvent) {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
+
+        const { error: submitError } = await supabase
+            .from('responses')
+            .insert([formData]);
+
+        if (submitError) {
+            setError(submitError.message);
+        } else {
+            setSubmitted(true);
+            setFormData({ full_name: '', email: '', subject: 'General Inquiry', message: '' });
+        }
+        setLoading(false);
+    }
     return (
         <div className="bg-white dark:bg-slate-950 font-sans selection:bg-brand-primary selection:text-white">
             <main>
@@ -49,32 +80,78 @@ export default function ContactPage() {
 
                         <div className="bg-white dark:bg-slate-900 p-12 rounded-[48px] shadow-2xl border border-slate-100 dark:border-slate-800 space-y-8">
                             <h2 className="text-4xl font-black uppercase tracking-tight">Send a <span className="text-brand-primary">Message</span></h2>
-                            <form className="space-y-6">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-black uppercase tracking-widest text-slate-400">Full Name</label>
-                                        <input type="text" className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none focus:ring-2 focus:ring-brand-primary outline-none font-medium" placeholder="Jane Doe" />
+
+                            {submitted ? (
+                                <div className="p-8 rounded-3xl bg-emerald-50 dark:bg-emerald-900/20 border-2 border-emerald-500/20 text-center space-y-4 animate-in fade-in zoom-in duration-500">
+                                    <span className="text-6xl">🎉</span>
+                                    <h3 className="text-2xl font-black uppercase text-emerald-600 dark:text-emerald-400">Message Sent!</h3>
+                                    <p className="text-slate-500 font-medium italic text-lg">Thank you for reaching out. Our team will get back to you shortly.</p>
+                                    <button onClick={() => setSubmitted(false)} className="text-xs font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400 hover:underline">Send another message</button>
+                                </div>
+                            ) : (
+                                <form onSubmit={handleSubmit} className="space-y-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div className="space-y-2">
+                                            <label className="text-xs font-black uppercase tracking-widest text-slate-400">Full Name</label>
+                                            <input
+                                                required
+                                                type="text"
+                                                value={formData.full_name}
+                                                onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
+                                                className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none focus:ring-2 focus:ring-brand-primary outline-none font-medium"
+                                                placeholder="Jane Doe"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-xs font-black uppercase tracking-widest text-slate-400">Email Address</label>
+                                            <input
+                                                required
+                                                type="email"
+                                                value={formData.email}
+                                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                                className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none focus:ring-2 focus:ring-brand-primary outline-none font-medium"
+                                                placeholder="jane@example.com"
+                                            />
+                                        </div>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-xs font-black uppercase tracking-widest text-slate-400">Email Address</label>
-                                        <input type="email" className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none focus:ring-2 focus:ring-brand-primary outline-none font-medium" placeholder="jane@example.com" />
+                                        <label className="text-xs font-black uppercase tracking-widest text-slate-400">Subject</label>
+                                        <select
+                                            value={formData.subject}
+                                            onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                                            className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none focus:ring-2 focus:ring-brand-primary outline-none font-medium appearance-none"
+                                        >
+                                            <option>General Inquiry</option>
+                                            <option>Partnership Proposal</option>
+                                            <option>Volunteer Interest</option>
+                                            <option>Press & Media</option>
+                                        </select>
                                     </div>
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-xs font-black uppercase tracking-widest text-slate-400">Subject</label>
-                                    <select className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none focus:ring-2 focus:ring-brand-primary outline-none font-medium appearance-none">
-                                        <option>General Inquiry</option>
-                                        <option>Partnership Proposal</option>
-                                        <option>Volunteer Interest</option>
-                                        <option>Press & Media</option>
-                                    </select>
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-xs font-black uppercase tracking-widest text-slate-400">Message</label>
-                                    <textarea rows={5} className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none focus:ring-2 focus:ring-brand-primary outline-none font-medium resize-none" placeholder="How can we help you?"></textarea>
-                                </div>
-                                <button className="w-full py-5 rounded-2xl bg-brand-primary text-white font-black text-xl hover:bg-brand-secondary transition-colors shadow-xl shadow-brand-primary/20">Send Message</button>
-                            </form>
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-black uppercase tracking-widest text-slate-400">Message</label>
+                                        <textarea
+                                            required
+                                            rows={5}
+                                            value={formData.message}
+                                            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                                            className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none focus:ring-2 focus:ring-brand-primary outline-none font-medium resize-none"
+                                            placeholder="How can we help you?"
+                                        ></textarea>
+                                    </div>
+
+                                    {error && (
+                                        <p className="p-4 rounded-xl bg-rose-50 dark:bg-rose-900/20 text-rose-500 font-bold text-sm italic">Error: {error}</p>
+                                    )}
+
+                                    <button
+                                        type="submit"
+                                        disabled={loading}
+                                        className="w-full py-5 rounded-2xl bg-brand-primary text-white font-black text-xl hover:bg-brand-secondary transition-colors shadow-xl shadow-brand-primary/20 disabled:opacity-50"
+                                    >
+                                        {loading ? 'Sending...' : 'Send Message'}
+                                    </button>
+                                </form>
+                            )}
                         </div>
                     </div>
                 </section>

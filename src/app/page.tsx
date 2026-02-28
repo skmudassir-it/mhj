@@ -11,13 +11,32 @@ export default function Home() {
     hero_tagline: 'Celebrating the magic of community wellness'
   });
 
+  const [heroImages, setHeroImages] = useState<any[]>([]);
+  const [gallery, setGallery] = useState<any[]>([]);
+  const [currentImgIndex, setCurrentImgIndex] = useState(0);
+
   useEffect(() => {
-    async function fetchSettings() {
-      const { data } = await supabase.from('site_settings').select('*').single();
-      if (data) setSettings(data);
+    async function fetchData() {
+      const { data: sData } = await supabase.from('site_settings').select('*').single();
+      if (sData) setSettings(sData);
+
+      const { data: hData } = await supabase.from('hero_images').select('*').order('display_order', { ascending: true });
+      if (hData && hData.length > 0) setHeroImages(hData);
+      else setHeroImages([{ src: '/hero_festival.png', alt: 'Hero Background' }]);
+
+      const { data: gData } = await supabase.from('gallery').select('*').limit(6).order('created_at', { ascending: false });
+      if (gData) setGallery(gData);
     }
-    fetchSettings();
+    fetchData();
   }, []);
+
+  useEffect(() => {
+    if (heroImages.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentImgIndex((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [heroImages]);
   return (
     <div className="flex flex-col font-sans">
 
@@ -25,14 +44,34 @@ export default function Home() {
         {/* Hero Section - Full Width Festival Style */}
         <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
-            <Image
-              src="/hero_festival.png"
-              alt="Memphis Health Jamboree Community Festival"
-              fill
-              className="object-cover brightness-[0.7] saturate-[1.2]"
-              priority
-            />
+            {heroImages.map((img, idx) => (
+              <div
+                key={img.id || idx}
+                className={`absolute inset-0 transition-opacity duration-1000 ${idx === currentImgIndex ? 'opacity-100' : 'opacity-0'}`}
+              >
+                <Image
+                  src={img.src}
+                  alt={img.alt || "Hero Background"}
+                  fill
+                  className="object-cover brightness-[0.7] saturate-[1.2]"
+                  priority={idx === 0}
+                />
+              </div>
+            ))}
             <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60"></div>
+
+            {/* Slider Indicators */}
+            {heroImages.length > 1 && (
+              <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex gap-3">
+                {heroImages.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentImgIndex(idx)}
+                    className={`w-3 h-3 rounded-full transition-all ${idx === currentImgIndex ? 'bg-brand-primary w-8' : 'bg-white/40'}`}
+                  />
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="relative z-10 mx-auto max-w-7xl px-6 text-center space-y-8">
@@ -200,45 +239,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Schedule/Programs Section */}
-        <section id="programs" className="py-32 px-6 bg-slate-900 text-white overflow-hidden relative">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(5,150,105,0.1)_0,transparent_100%)]"></div>
-          <div className="mx-auto max-w-7xl relative z-10">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
-              <div className="space-y-4">
-                <h2 className="text-4xl md:text-6xl font-black tracking-tight">Community <span className="text-brand-primary">Workshops</span></h2>
-                <p className="text-xl text-slate-400 max-w-xl">Free accessible programs designed for every Memphian.</p>
-              </div>
-              <div className="flex gap-4">
-                {['Weekly', 'Monthly', 'Annual'].map((freq, i) => (
-                  <button key={i} className={`px-8 py-3 rounded-xl font-bold text-sm transition-all ${i === 0 ? 'bg-brand-primary text-white' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}>
-                    {freq}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              {[
-                { time: "Saturdays", event: "Community Yoga in the Park", trainer: "Volunteer led", category: "Physical" },
-                { time: "Tuesdays", event: "Neighborhood Nutrition Class", trainer: "Community Health Workers", category: "Nutrition" },
-                { time: "Wednesdays", event: "Mental Health Support Group", trainer: "Certified Facilitators", category: "Mental" },
-                { time: "Bi-Weekly", event: "Youth Sports Clinic", trainer: "Local Coaches", category: "Physical" }
-              ].map((item, i) => (
-                <div key={i} className="flex flex-col md:flex-row items-center gap-8 p-8 rounded-2xl bg-slate-800/50 border border-slate-700 hover:border-brand-primary/50 transition-colors group">
-                  <div className="text-2xl font-black text-brand-primary w-40">{item.time}</div>
-                  <div className="flex-grow text-center md:text-left">
-                    <h4 className="text-2xl font-bold group-hover:text-brand-primary transition-colors">{item.event}</h4>
-                    <p className="text-slate-400">{item.trainer}</p>
-                  </div>
-                  <div className="px-4 py-1.5 rounded-full border border-slate-600 text-xs font-bold uppercase tracking-widest text-slate-400">
-                    {item.category}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* Crumbs & Culture Tour Section */}
         <section id="tour" className="py-32 px-6 bg-white dark:bg-slate-950 relative overflow-hidden">
@@ -341,6 +341,42 @@ export default function Home() {
                 <div key={i} className="text-xl font-black italic tracking-tighter text-slate-400 opacity-60">{name}</div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Gallery Section */}
+        <section id="gallery" className="py-32 px-6 bg-white dark:bg-slate-950">
+          <div className="mx-auto max-w-7xl">
+            <div className="flex justify-between items-end mb-16 px-4">
+              <div className="space-y-4">
+                <h2 className="text-5xl md:text-7xl font-black tracking-tight text-slate-900 dark:text-white uppercase">Community <span className="text-brand-primary">Gallery</span></h2>
+                <div className="w-40 h-2 bg-brand-primary rounded-full"></div>
+              </div>
+              <Link href="/gallery" className="hidden md:inline-flex items-center gap-2 text-brand-primary font-black uppercase tracking-widest hover:gap-4 transition-all">
+                View All Images <span>→</span>
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {gallery.map((item, i) => (
+                <div key={item.id || i} className="group relative aspect-video rounded-[32px] overflow-hidden shadow-xl hover:shadow-2xl transition-all hover:-translate-y-2">
+                  <Image
+                    src={item.src}
+                    alt={item.title || "Gallery Image"}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-8 flex flex-col justify-end">
+                    <h3 className="text-xl font-bold text-white uppercase tracking-tight">{item.title}</h3>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {gallery.length === 0 && (
+              <div className="py-24 text-center text-slate-400 font-bold uppercase italic tracking-[0.2em] border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-[48px]">
+                Capturing moments of joy...
+              </div>
+            )}
           </div>
         </section>
 
