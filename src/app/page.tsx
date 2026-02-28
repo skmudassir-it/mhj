@@ -6,11 +6,12 @@ export default function Home() {
       {/* Navigation */}
       <nav className="glass sticky top-0 z-50 w-full px-6 py-4">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <div className="flex items-center gap-2 group cursor-pointer">
-            <div className="w-10 h-10 rounded-xl bg-brand-primary flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-brand-primary/20 group-hover:scale-110 transition-transform">M</div>
+          <div className="flex items-center gap-4 group cursor-pointer">
+            <div className="relative w-12 h-12">
+              <Image src="/logo.png" alt="MHJ Logo" fill className="object-contain group-hover:scale-110 transition-transform" />
+            </div>
             <div className="flex flex-col">
-              <span className="text-xl font-bold tracking-tight text-brand-primary leading-none">MHJ</span>
-              <span className="text-xs font-medium text-slate-500 uppercase tracking-widest">Memphis</span>
+              <span className="text-xl font-black tracking-tight text-brand-primary leading-none uppercase">Memphis Health<br />Jamboree</span>
             </div>
           </div>
           <div className="hidden space-x-8 md:flex items-center">
@@ -33,10 +34,9 @@ export default function Home() {
           <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
             <div className="lg:col-span-7 space-y-10">
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-primary/10 px-4 py-2 text-sm font-bold text-brand-primary uppercase tracking-wider animate-in fade-in slide-in-from-left duration-700">
-                <span className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-primary opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-brand-primary"></span>
-                </span>
+                <div className="relative w-32 h-32 mb-4 animate-in fade-in zoom-in duration-1000">
+                  <Image src="/logo.png" alt="MHJ Logo" fill className="object-contain" />
+                </div>
                 Non-Profit Foundation
               </div>
               <h1 className="text-6xl md:text-8xl font-black leading-[0.95] tracking-tight animate-in fade-in slide-in-from-bottom duration-1000 delay-200">
