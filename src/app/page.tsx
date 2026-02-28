@@ -378,8 +378,10 @@ export default function Home() {
         <div className="mx-auto max-w-7xl">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
             <div className="col-span-1 md:col-span-2 space-y-8">
-              <div className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-xl bg-brand-primary flex items-center justify-center text-white font-bold text-xl">M</div>
+              <div className="flex items-center gap-4">
+                <div className="relative w-12 h-12">
+                  <Image src="/logo.png" alt="MHJ Logo" fill className="object-contain" />
+                </div>
                 <span className="text-2xl font-black tracking-tight text-brand-primary leading-none uppercase">Memphis Health <br />Jamboree</span>
               </div>
               <p className="text-lg text-slate-500 max-w-md font-medium leading-relaxed">Dedicated to building a healthier, stronger, and more vibrant Memphis through the power of community, health equity, and ancestral wisdom.</p>
