@@ -6,54 +6,59 @@ export default function Home() {
     <div className="flex flex-col font-sans">
 
       <main className="flex-grow">
-        {/* Hero Section */}
-        <section className="relative flex min-h-[95vh] items-center justify-center overflow-hidden px-6 pt-20">
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-primary/10 rounded-full blur-[120px] -mr-64 -mt-64 anim-pulse"></div>
-            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-secondary/10 rounded-full blur-[120px] -ml-64 -mb-64"></div>
+        {/* Hero Section - Full Width Festival Style */}
+        <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/hero_festival.png"
+              alt="Memphis Health Jamboree Community Festival"
+              fill
+              className="object-cover brightness-[0.7] saturate-[1.2]"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60"></div>
           </div>
 
-          <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-            <div className="lg:col-span-7 space-y-10">
-              <div className="inline-flex items-center gap-2 rounded-full bg-brand-primary/10 px-4 py-2 text-sm font-bold text-brand-primary uppercase tracking-wider animate-in fade-in slide-in-from-left duration-700">
-                <div className="relative w-32 h-32 mb-4 animate-in fade-in zoom-in duration-1000">
-                  <Image src="/logo.png" alt="MHJ Logo" fill className="object-contain" />
-                </div>
-                Non-Profit Foundation
-              </div>
-              <h1 className="text-6xl md:text-8xl font-black leading-[0.95] tracking-tight animate-in fade-in slide-in-from-bottom duration-1000 delay-200">
-                A Healthier <br />
-                <span className="text-gradient">Memphis</span> <br />
-                <span className="text-slate-400 italic">Co-Created</span>
-              </h1>
-              <p className="max-w-xl text-xl md:text-2xl text-slate-600 dark:text-slate-300 leading-relaxed animate-in fade-in slide-in-from-bottom duration-1000 delay-400 font-medium">
-                A culturally rooted, community-co-created public health experience designed to strengthen trust, connection, and wellness across Memphis.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-6 animate-in fade-in slide-in-from-bottom duration-1000 delay-500">
-                <a href="#get-involved" className="flex items-center justify-center rounded-2xl bg-brand-primary px-10 py-5 text-xl font-bold text-white shadow-2xl shadow-brand-primary/40 hover:bg-brand-secondary transition-all hover:-translate-y-1 hover:shadow-brand-primary/60">
-                  Join the Movement
-                </a>
-                <a href="#mission" className="flex items-center justify-center rounded-2xl border-2 border-slate-200 dark:border-slate-800 px-10 py-5 text-xl font-bold hover:bg-white dark:hover:bg-slate-900 shadow-sm transition-all hover:-translate-y-1">
-                  Our Impact
-                </a>
-              </div>
+          <div className="relative z-10 mx-auto max-w-7xl px-6 text-center space-y-8">
+            <h1 className="text-7xl md:text-[10rem] font-black leading-none tracking-tighter text-white uppercase animate-in fade-in zoom-in duration-1000">
+              JAMBOREE
+            </h1>
+            <p className="mx-auto max-w-2xl text-xl md:text-3xl font-black text-white uppercase tracking-[0.2em] opacity-90 animate-in fade-in slide-in-from-bottom duration-1000 delay-300">
+              Celebrating the magic of community wellness
+            </p>
+            <div className="pt-8 animate-in fade-in slide-in-from-bottom duration-1000 delay-500">
+              <Link href="#get-involved" className="inline-block bg-brand-primary text-white px-12 py-6 rounded-2xl text-xl font-black uppercase tracking-widest shadow-2xl hover:bg-brand-secondary transition-all hover:-translate-y-1">
+                Join the Movement
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Why We Exist Section */}
+        <section id="why-we-exist" className="py-32 px-6 bg-white dark:bg-slate-950">
+          <div className="mx-auto max-w-7xl">
+            <div className="space-y-4 mb-20">
+              <h2 className="text-5xl md:text-7xl font-black tracking-tight text-[#8A1538] uppercase">
+                Why We <span className="italic">Exist</span>
+              </h2>
+              <div className="w-40 h-2 bg-[#8A1538] rounded-full"></div>
             </div>
 
-            <div className="lg:col-span-5 relative animate-in fade-in zoom-in duration-1000 delay-300">
-              <div className="absolute -inset-4 bg-gradient-to-tr from-brand-primary/20 to-brand-secondary/20 rounded-[40px] blur-2xl -z-10"></div>
-              <div className="relative aspect-[4/5] rounded-[32px] overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800">
-                <Image
-                  src="/hero_memphis_health.png"
-                  alt="Memphis Health Jamboree Community Activity"
-                  fill
-                  className="object-cover hover:scale-105 transition-transform duration-1000"
-                  priority
-                />
-                <div className="absolute inset-x-0 bottom-0 glass p-8 m-4 rounded-2xl shadow-xl">
-                  <div className="text-center">
-                    <div className="text-xs font-black text-brand-primary uppercase tracking-widest mb-1">Our Commitment</div>
-                    <div className="text-lg font-bold">100% of donations fuel community wellness</div>
-                  </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+              <div className="space-y-8 text-xl md:text-2xl text-slate-600 dark:text-slate-400 font-medium leading-relaxed">
+                <p>
+                  Memphis faces unique health challenges, but we believe the solution isn't found in clinics alone—it's found in the <span className="text-[#8A1538] font-black uppercase">relationships</span> we build and the <span className="text-[#8A1538] font-black uppercase">culture</span> we share.
+                </p>
+                <p>
+                  The Jamboree exists to bridge the gap between healthcare and the community, transforming wellness into a celebratory experience that everyone can see, taste, and feel.
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-6">
+                <div className="aspect-[4/5] rounded-[40px] overflow-hidden shadow-2xl relative translate-y-12">
+                  <Image src="/hero_memphis_health.png" alt="Community Activity" fill className="object-cover" />
+                </div>
+                <div className="aspect-[4/5] rounded-[40px] overflow-hidden shadow-2xl relative">
+                  <Image src="/wellness_workshop.png" alt="Wellness Workshop" fill className="object-cover" />
                 </div>
               </div>
             </div>
