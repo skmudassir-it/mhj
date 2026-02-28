@@ -40,12 +40,12 @@ export default function Home() {
                 Non-Profit Foundation
               </div>
               <h1 className="text-6xl md:text-8xl font-black leading-[0.95] tracking-tight animate-in fade-in slide-in-from-bottom duration-1000 delay-200">
-                Building a <br />
-                <span className="text-gradient">Healthier</span> <br />
-                <span className="text-slate-400">Memphis</span>
+                A Healthier <br />
+                <span className="text-gradient">Memphis</span> <br />
+                <span className="text-slate-400 italic">Co-Created</span>
               </h1>
-              <p className="max-w-xl text-xl md:text-2xl text-slate-600 dark:text-slate-300 leading-relaxed animate-in fade-in slide-in-from-bottom duration-1000 delay-400">
-                The Memphis Health Jamboree is an NGO dedicated to health equity. We provide free community wellness programs, nutrition education, and mental health resources.
+              <p className="max-w-xl text-xl md:text-2xl text-slate-600 dark:text-slate-300 leading-relaxed animate-in fade-in slide-in-from-bottom duration-1000 delay-400 font-medium">
+                The Memphis Health Jamboree is a culturally rooted, community-led public health experience. We transform wellness into joy, empowerment, and shared belonging.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 animate-in fade-in slide-in-from-bottom duration-1000 delay-500">
                 <a href="#get-involved" className="flex items-center justify-center rounded-2xl bg-brand-primary px-10 py-5 text-xl font-bold text-white shadow-2xl shadow-brand-primary/40 hover:bg-brand-secondary transition-all hover:-translate-y-1 hover:shadow-brand-primary/60">
@@ -81,10 +81,10 @@ export default function Home() {
         {/* Categories Section */}
         <section id="mission" className="py-32 px-6">
           <div className="mx-auto max-w-7xl">
-            <div className="text-center max-w-3xl mx-auto space-y-4 mb-20">
-              <h2 className="text-4xl md:text-5xl font-black tracking-tight">Our Pillars of Service</h2>
-              <p className="text-xl text-slate-500 dark:text-slate-400">
-                We work tireslessly to bridge the health gap in Memphis through sustainable, community-led initiatives.
+            <div className="text-center max-w-3xl mx-auto space-y-6 mb-20">
+              <h2 className="text-4xl md:text-6xl font-black tracking-tight">Relational <span className="text-brand-primary">Health</span></h2>
+              <p className="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
+                Public health is strongest when it grows alongside the people it serves. The Jamboree invites participation through food, movement, music, and art.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
