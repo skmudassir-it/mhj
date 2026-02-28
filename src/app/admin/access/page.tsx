@@ -25,6 +25,8 @@ export default function AdminPage() {
     const [heroImageForm, setHeroImageForm] = useState({ src: '' });
     const [galleryForm, setGalleryForm] = useState({ src: '', title: '' });
     const [responseFilter, setResponseFilter] = useState('All');
+    const [fromDate, setFromDate] = useState('');
+    const [toDate, setToDate] = useState('');
 
     useEffect(() => {
         fetchData();
@@ -64,13 +66,34 @@ export default function AdminPage() {
         setLoading(false);
     }
 
+    const filteredResponses = responses.filter(res => {
+        // Event Filter
+        const eventMatch = responseFilter === 'All'
+            || (responseFilter === 'Contact Form' && !res.event_title)
+            || (res.event_title === responseFilter);
+
+        // Date Filter
+        const resDate = new Date(res.created_at);
+        const start = fromDate ? new Date(fromDate) : null;
+        const end = toDate ? new Date(toDate) : null;
+
+        // Set comparison times to start/end of day
+        if (start) start.setHours(0, 0, 0, 0);
+        if (end) end.setHours(23, 59, 59, 999);
+
+        const afterStart = !start || resDate >= start;
+        const beforeEnd = !end || resDate <= end;
+
+        return eventMatch && afterStart && beforeEnd;
+    });
+
     function downloadCSV() {
-        if (responses.length === 0) return;
+        if (filteredResponses.length === 0) return;
 
         const headers = ['ID', 'Full Name', 'Email', 'Phone', 'Subject', 'Message', 'Event Title', 'Created At'];
         const csvRows = [
             headers.join(','),
-            ...responses.map(res => [
+            ...filteredResponses.map(res => [
                 res.id,
                 `"${res.full_name?.replace(/"/g, '""') || ''}"`,
                 `"${res.email || ''}"`,
@@ -539,38 +562,56 @@ export default function AdminPage() {
 
                     {activeTab === 'responses' && (
                         <div className="space-y-6">
-                            <div className="flex justify-between items-center mb-4">
-                                <h2 className="text-xl font-black uppercase tracking-tight">User Responses & Registrations</h2>
-                                <div className="flex items-center gap-3">
+                            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8 p-6 bg-slate-50 dark:bg-slate-800/50 rounded-3xl border border-slate-100 dark:border-slate-800">
+                                <div>
+                                    <h2 className="text-xl font-black uppercase tracking-tight">Responses</h2>
+                                    <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mt-1">Found {responses.length} total entries</p>
+                                </div>
+                                <div className="flex flex-wrap items-center gap-4 w-full lg:w-auto">
+                                    <div className="flex flex-col gap-1">
+                                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">From Date</span>
+                                        <input
+                                            type="date"
+                                            value={fromDate}
+                                            onChange={(e) => setFromDate(e.target.value)}
+                                            className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 border-none outline-none font-bold text-sm focus:ring-2 focus:ring-brand-primary/20 shadow-sm"
+                                        />
+                                    </div>
+                                    <div className="flex flex-col gap-1">
+                                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">To Date</span>
+                                        <input
+                                            type="date"
+                                            value={toDate}
+                                            onChange={(e) => setToDate(e.target.value)}
+                                            className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 border-none outline-none font-bold text-sm focus:ring-2 focus:ring-brand-primary/20 shadow-sm"
+                                        />
+                                    </div>
+                                    <div className="flex flex-col gap-1">
+                                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">Filter by Source</span>
+                                        <select
+                                            value={responseFilter}
+                                            onChange={(e) => setResponseFilter(e.target.value)}
+                                            className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 border-none outline-none font-bold text-sm focus:ring-2 focus:ring-brand-primary/20 shadow-sm min-w-[150px]"
+                                        >
+                                            <option>All</option>
+                                            <option>Contact Form</option>
+                                            {Array.from(new Set(events.map(e => e.title))).map(title => (
+                                                <option key={title}>{title}</option>
+                                            ))}
+                                        </select>
+                                    </div>
                                     <button
                                         onClick={downloadCSV}
-                                        className="px-4 py-2 rounded-xl bg-emerald-500 text-white font-bold text-sm hover:bg-emerald-600 transition-all flex items-center gap-2"
+                                        className="h-[42px] px-6 rounded-xl bg-emerald-500 text-white font-black uppercase text-xs hover:bg-emerald-600 transition-all flex items-center gap-2 shadow-lg shadow-emerald-500/20 mt-auto"
                                     >
                                         <span>📥</span>
-                                        Download CSV
+                                        Export CSV
                                     </button>
-                                    <span className="text-xs font-black uppercase tracking-widest text-slate-400">Filter by Event:</span>
-                                    <select
-                                        value={responseFilter}
-                                        onChange={(e) => setResponseFilter(e.target.value)}
-                                        className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border-none outline-none font-bold text-sm focus:ring-2 focus:ring-brand-primary/20"
-                                    >
-                                        <option>All</option>
-                                        <option>Contact Form</option>
-                                        {Array.from(new Set(events.map(e => e.title))).map(title => (
-                                            <option key={title}>{title}</option>
-                                        ))}
-                                    </select>
                                 </div>
                             </div>
 
-                            {responses
-                                .filter(res => {
-                                    if (responseFilter === 'All') return true;
-                                    if (responseFilter === 'Contact Form') return !res.event_title;
-                                    return res.event_title === responseFilter;
-                                })
-                                .map((res) => (
+                            <div className="space-y-4">
+                                {filteredResponses.map((res) => (
                                     <div key={res.id} className="p-6 rounded-2xl bg-white dark:bg-slate-800 space-y-4 shadow-sm border border-slate-100 dark:border-slate-800 group hover:border-brand-primary/30 transition-all">
                                         <div className="flex justify-between items-start">
                                             <div className="space-y-1">
@@ -606,7 +647,22 @@ export default function AdminPage() {
                                         </div>
                                     </div>
                                 ))}
-                            {responses.length === 0 && <p className="text-center py-12 text-slate-400 font-bold uppercase italic tracking-widest">No responses yet</p>}
+                                {filteredResponses.length === 0 && (
+                                    <div className="py-24 text-center space-y-4">
+                                        <span className="text-6xl">🔍</span>
+                                        <h3 className="text-xl font-black uppercase tracking-tight">No Results Found</h3>
+                                        <p className="text-slate-400 font-medium">Try adjusting your filters or date range.</p>
+                                        {(responseFilter !== 'All' || fromDate || toDate) && (
+                                            <button
+                                                onClick={() => { setResponseFilter('All'); setFromDate(''); setToDate(''); }}
+                                                className="text-brand-primary font-black uppercase tracking-widest text-xs hover:underline"
+                                            >
+                                                Clear all filters
+                                            </button>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     )}
                 </div>
