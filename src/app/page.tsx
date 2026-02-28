@@ -190,6 +190,67 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Crumbs & Culture Tour Section */}
+        <section id="tour" className="py-32 px-6 bg-white dark:bg-slate-950 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-brand-primary/5 rounded-full blur-3xl -mr-48 -mt-48"></div>
+          <div className="mx-auto max-w-7xl">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+              <div className="space-y-8">
+                <div className="inline-flex items-center gap-2 rounded-full bg-brand-secondary/10 px-4 py-2 text-sm font-bold text-brand-secondary uppercase tracking-widest">
+                  Upcoming Activation Tour
+                </div>
+                <h2 className="text-5xl md:text-7xl font-black leading-tight tracking-tight">
+                  Crumbs & <br />
+                  <span className="text-brand-secondary">Culture</span>
+                </h2>
+                <div className="space-y-6 text-xl text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                  <p>
+                    The Crumbs & Culture Tour is the part of the Memphis Health Jamboree that goes out into the city and into the places where people already gather, make memories, and feel at home.
+                  </p>
+                  <p>
+                    Through food, movement, music, and storytelling, the tour introduces the Jamboree slowly, the way things grow in community: through familiarity, through joy, and through belonging.
+                  </p>
+                </div>
+
+                <div className="bg-slate-50 dark:bg-slate-900/50 p-8 rounded-[32px] border border-slate-100 dark:border-slate-800">
+                  <h4 className="font-bold text-lg mb-4 uppercase tracking-wider text-slate-400">Why "Crumbs"?</h4>
+                  <p className="text-lg text-slate-600 dark:text-slate-400">
+                    Crumbs travel: in kitchens, in churches, and on porches. They tell stories about who we are and where we come from. Culture is how Memphis shares wisdom and resilience.
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {[
+                  { title: "What May Happen", items: ["Cooking demos & tastings", "Zumba, yoga, pilates", "DJs & Storytelling", "Nutrition workshops"] },
+                  { title: "Where It Lives", items: ["Parks & Libraries", "Farmers markets", "Neighborhood centers", "Creative spaces"] }
+                ].map((box, i) => (
+                  <div key={i} className={`p-8 rounded-[40px] ${i === 0 ? 'bg-brand-primary text-white' : 'bg-slate-900 text-white'} shadow-2xl space-y-6`}>
+                    <h3 className="text-2xl font-black uppercase tracking-tight">{box.title}</h3>
+                    <ul className="space-y-3">
+                      {box.items.map((item, j) => (
+                        <li key={j} className="flex items-center gap-2 opacity-90 font-bold">
+                          <span className="w-1.5 h-1.5 rounded-full bg-white/40"></span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+                <div className="sm:col-span-2 p-8 rounded-[40px] bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                  <h3 className="text-2xl font-black uppercase tracking-tight mb-4">Our Hope</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
+                    <div className="flex items-center gap-2">✔ Build trust & joy</div>
+                    <div className="flex items-center gap-2">✔ Relational health</div>
+                    <div className="flex items-center gap-2">✔ Gather stories</div>
+                    <div className="flex items-center gap-2">✔ Learn from community</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Support/Get Involved Section */}
         <section id="get-involved" className="py-32 px-6">
           <div className="mx-auto max-w-7xl">
@@ -219,13 +280,15 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Partners Section */}
+        {/* Partners & Supporters Section */}
         <section className="py-24 px-6 border-y border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/30">
           <div className="mx-auto max-w-7xl">
             <p className="text-center text-xs font-black uppercase tracking-[0.3em] text-slate-400 mb-12">Proudly Supported By</p>
-            <div className="flex flex-wrap items-center justify-center gap-16 opacity-40 grayscale hover:grayscale-0 transition-all duration-700">
+            <div className="flex flex-wrap items-center justify-center gap-16 transition-all duration-700">
+              <div className="text-xl font-black text-slate-500 max-w-xs text-center leading-tight">University of Memphis School of Public Health Changemakers Initiative</div>
+              <div className="text-xl font-black text-slate-500 max-w-xs text-center leading-tight">GiveCamp Memphis 2026</div>
               {['Memphis Health Dept', 'Mid-South Food Bank', 'Shelby County Schools', 'Community Foundation', 'St. Jude'].map((name, i) => (
-                <div key={i} className="text-2xl font-black italic tracking-tighter text-slate-500">{name}</div>
+                <div key={i} className="text-xl font-black italic tracking-tighter text-slate-400 opacity-60">{name}</div>
               ))}
             </div>
           </div>
