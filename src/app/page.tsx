@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
           <div className="hidden space-x-8 md:flex items-center">
             <a href="#mission" className="text-sm font-semibold hover:text-brand-primary transition-colors">Our Mission</a>
             <a href="#impact" className="text-sm font-semibold hover:text-brand-primary transition-colors">Impact</a>
+            <Link href="/about" className="text-sm font-semibold hover:text-brand-primary transition-colors">About Us</Link>
             <a href="#programs" className="text-sm font-semibold hover:text-brand-primary transition-colors">Programs</a>
             <a href="#get-involved" className="glass bg-brand-primary !bg-opacity-100 px-6 py-2.5 !text-white rounded-full text-sm font-bold shadow-lg shadow-brand-primary/30 hover:scale-105 active:scale-95 transition-all">Support Our Mission</a>
           </div>
@@ -392,7 +394,8 @@ export default function Home() {
             <div className="space-y-6">
               <h5 className="font-bold text-lg uppercase tracking-widest">About Us</h5>
               <ul className="space-y-4 text-slate-500 font-medium">
-                <li><a href="#" className="hover:text-brand-primary transition-colors">Our Story</a></li>
+                <li><Link href="/about" className="hover:text-brand-primary transition-colors">Our Story</Link></li>
+                <li><Link href="/about" className="hover:text-brand-primary transition-colors">Meet the Team</Link></li>
                 <li><a href="#mission" className="hover:text-brand-primary transition-colors">Our Mission</a></li>
                 <li><a href="#impact" className="hover:text-brand-primary transition-colors">Impact Reports</a></li>
                 <li><a href="#programs" className="hover:text-brand-primary transition-colors">Programs</a></li>
